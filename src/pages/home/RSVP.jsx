@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Confetti from "react-confetti";
-import { useWindowSize } from "react-use";
 import { CheckCircle2, XCircle } from "lucide-react";
 import { images } from "../../assets/images";
 
@@ -11,7 +10,6 @@ const RSVP = () => {
     const [submitted, setSubmitted] = useState(false);
     const [showConfetti, setShowConfetti] = useState(false);
     const [error, setError] = useState("");
-    const { width, height } = useWindowSize();
 
     useEffect(() => {
         if (submitted || error) {
@@ -60,7 +58,7 @@ const RSVP = () => {
             </div>
 
             {showConfetti && (
-                <Confetti width={width} height={height} recycle={false} numberOfPieces={400} />
+                <Confetti recycle={false} numberOfPieces={1000} style={{zIndex: 11111}} />
             )}
 
             <div className="relative z-10 max-w-2xl w-full px-6 text-center text-white">
