@@ -118,7 +118,7 @@ const Hero = ({ names, date, coverImg }) => {
                 <motion.div
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.6 }}
+                    transition={{ delay: 0.6, duration: 1 }}
                     className="relative md:w-96 md:h-96 rounded-3xl overflow-hidden shadow-2xl border-[8px] border-white/70 z-10 group"
                 >
                     <img
