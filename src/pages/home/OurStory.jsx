@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Heart, Sparkles } from "lucide-react";
+import { images } from "../../assets/images";
 
 const OurStory = () => {
     const [showFullStory, setShowFullStory] = useState(false);
 
     return (
-        <section className="relative bg-gradient-to-b from-pink-50 via-rose-50 to-white py-20 overflow-hidden">
+        <section id="story" className="relative bg-gradient-to-b from-pink-50 via-rose-50 to-white py-20 overflow-hidden">
             <motion.div
                 className="absolute top-10 left-10 text-rose/40"
                 initial={{ y: 0 }}
@@ -44,7 +45,7 @@ const OurStory = () => {
                         className="relative"
                     >
                         <img
-                            src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e"
+                            src={images.couple12}
                             alt="our story"
                             className="rounded-3xl shadow-2xl border-4 border-white transform hover:scale-105 transition-transform duration-500"
                         />

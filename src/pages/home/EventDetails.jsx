@@ -12,7 +12,7 @@ const EventDetails = ({ venue, time, address, dressCode }) => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
-                className="bg-white/90 backdrop-blur-lg rounded-3xl shadow-2xl p-10 relative border border-rose/20"
+                className="bg-white/90 backdrop-blur-lg rounded-3xl shadow-2xl px-5 md:px-10 py-10 relative border border-rose/20"
             >
                 <h2 className="text-4xl font-playfair text-center text-rose font-semibold mb-10 drop-shadow-sm">
                     Event Details 💍
@@ -60,7 +60,7 @@ const EventDetails = ({ venue, time, address, dressCode }) => {
                         )}`}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-block px-8 py-3 rounded-full text-base font-semibold shadow-lg border border-gold bg-gold text-white hover:bg-emerald hover:border-emerald transition-all duration-300"
+                        className="inline-block px-8 py-3 rounded-full text-base font-semibold shadow-lg border border-gold bg-gold text-white hover:bg-rose hover:border-rose transition-all duration-300"
                     >
                         Open in Google Maps
                     </a>

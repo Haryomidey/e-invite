@@ -1,3 +1,4 @@
+import { images } from "../../assets/images"
 import CountdownTimer from "./CountdownTimer"
 import EventDetails from "./EventDetails"
 import Gallery from "./Gallery"
@@ -21,7 +22,7 @@ const WeddingInvite = () => {
                 <Hero
                     names="Bolanle & Timilehin"
                     date={weddingDate}
-                    coverImg="https://images.unsplash.com/photo-1524504388940-b1c1722653e1"
+                    coverImg={images.couple7}
                 />
                 <CountdownTimer targetDate={weddingDate} />
                 <EventDetails

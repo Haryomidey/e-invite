@@ -1,110 +1,165 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Confetti from "react-confetti";
 import { useWindowSize } from "react-use";
+import { CheckCircle2, XCircle } from "lucide-react";
+import { images } from "../../assets/images";
 
 const RSVP = () => {
     const [name, setName] = useState("");
     const [response, setResponse] = useState("Will attend 🎉");
     const [submitted, setSubmitted] = useState(false);
     const [showConfetti, setShowConfetti] = useState(false);
+    const [error, setError] = useState("");
     const { width, height } = useWindowSize();
+
+    useEffect(() => {
+        if (submitted || error) {
+            const timer = setTimeout(() => {
+                setSubmitted(false);
+                setError("");
+            }, 5000);
+            return () => clearTimeout(timer);
+        }
+    }, [submitted, error]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         if (!name.trim()) {
-            alert("Please enter your name before submitting! 💌");
+            setError("Please enter your full name before submitting 💌");
+            setSubmitted(false);
             return;
         }
 
+        setError("");
         setSubmitted(true);
+        setName("");
+        setResponse("Will attend 🎉");
 
         if (response === "Will attend 🎉") {
             setShowConfetti(true);
-
-            // Stop confetti after 5 seconds
-            setTimeout(() => {
-                setShowConfetti(false);
-            }, 5000);
+            setTimeout(() => setShowConfetti(false), 7000);
         } else {
             setShowConfetti(false);
         }
-
-        setTimeout(() => {
-            alert(`Thank you ${name}! Your response has been recorded 💕`);
-        }, 500);
     };
 
     return (
-        <section id="rsvp" className="relative bg-gradient-to-b from-pink-50 via-rose-50/30 to-white py-20">
-            {showConfetti && <Confetti width={width} height={height} />}
+        <section
+            id="rsvp"
+            className="relative min-h-screen flex items-center justify-center overflow-hidden py-24"
+        >
+            <div className="absolute inset-0">
+                <img
+                    src={images.couple3}
+                    alt="wedding bg"
+                    className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80" />
+            </div>
 
-            <div className="max-w-3xl mx-auto px-6 text-center">
-                {/* Title */}
+            {showConfetti && (
+                <Confetti width={width} height={height} recycle={false} numberOfPieces={400} />
+            )}
+
+            <div className="relative z-10 max-w-2xl w-full px-6 text-center text-white">
                 <motion.h2
-                    initial={{ opacity: 0, y: -20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                    viewport={{ once: true }}
-                    className="text-4xl md:text-5xl font-playfair text-rose font-bold mb-6"
+                    initial={{ opacity: 0, y: -30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1 }}
+                    className="text-5xl md:text-6xl font-playfair font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-rose-300 to-pink-200 drop-shadow-lg"
                 >
-                    Join Us For Our Special Day 💍
+                    Be Part of Our Forever 💍
                 </motion.h2>
 
-                <p className="text-gray-600 mb-8 text-lg">
-                    We'd love to have you celebrate this beautiful journey with us!  
-                    Please RSVP below so we can prepare your special spot. ✨
-                </p>
+                <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 1.2, delay: 0.3 }}
+                    className="text-lg md:text-xl text-gray-200 mb-12 leading-relaxed"
+                >
+                    Your presence means the world to us.
+                    Please let us know if you'll be joining the celebration. ✨
+                </motion.p>
 
-                {/* Form */}
+                <AnimatePresence>
+                    {submitted && !error && (
+                        <motion.div
+                            initial={{ opacity: 0, y: 10, scale: 0.9 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: 10, scale: 0.9 }}
+                            transition={{ duration: 0.5 }}
+                            className="flex items-center justify-center flex-col gap-3 mt-8 bg-green-500/30 text-rose-100 px-6 rounded-xl shadow-xl font-semibold animate-fadeIn py-5 mb-4"
+                        >
+                            <CheckCircle2 size={84} className="text-rose-300 animate-pulse" />
+                            🎊 Thank you, {name || "Guest"}! We can't wait to celebrate with you!
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+
                 <motion.form
                     onSubmit={handleSubmit}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.6 }}
-                    viewport={{ once: true }}
-                    className="bg-white p-8 rounded-2xl shadow-2xl border border-pink-100 space-y-5"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1.2, delay: 0.5 }}
+                    className="bg-black/50 backdrop-blur-lg px-5 md:px-8 py-8 rounded-2xl shadow-2xl border border-white/10 space-y-6"
                 >
-                    <motion.input
-                        whileFocus={{ scale: 1.02 }}
-                        type="text"
-                        placeholder="Enter your full name"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        className="w-full border border-pink-200 rounded-lg p-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-300 transition"
-                    />
+                    <div className="text-left">
+                        <label className="text-pink-200 font-medium block mb-2">
+                            Full Name <span className="text-rose-400">*</span>
+                        </label>
+                        <motion.input
+                            whileFocus={{ scale: 1.02 }}
+                            type="text"
+                            placeholder="Enter your full name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            className="w-full border border-white/20 rounded-lg p-3 bg-white/10 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-rose-400 transition"
+                        />
+                    </div>
 
-                    <motion.select
-                        whileFocus={{ scale: 1.02 }}
-                        value={response}
-                        onChange={(e) => setResponse(e.target.value)}
-                        className="w-full border border-pink-200 rounded-lg p-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-300 transition"
-                    >
-                        <option>Will attend 🎉</option>
-                        <option>Can't make it 💔</option>
-                    </motion.select>
+                    <div className="text-left">
+                        <label className="text-pink-200 font-medium block mb-2">
+                            Will you attend?
+                        </label>
+                        <motion.select
+                            whileFocus={{ scale: 1.02 }}
+                            value={response}
+                            onChange={(e) => setResponse(e.target.value)}
+                            className="w-full border border-white/20 rounded-lg p-3 bg-white/10 text-white focus:outline-none focus:ring-2 focus:ring-rose-400 transition"
+                        >
+                            <option className="text-gray-900">Will attend 🎉</option>
+                            <option className="text-gray-900">Can't make it 💔</option>
+                        </motion.select>
+                    </div>
 
                     <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         type="submit"
-                        className="w-full py-3 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 text-white font-semibold shadow-lg hover:shadow-xl transition duration-300"
+                        className="w-full py-3 rounded-full bg-gradient-to-r from-rose-500 to-pink-500 text-rose text-lg font-semibold shadow-md hover:shadow-lg transition"
                     >
-                        {response === "Will attend 🎉" ? "Yes! I'll Be There 🎉" : "Send My RSVP 💌"}
+                        {response === "Will attend 🎉"
+                            ? "Yes! I'll Be There 🎉"
+                            : "Send My RSVP 💌"}
                     </motion.button>
-                </motion.form>
 
-                {submitted && (
-                    <motion.p
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 0.5 }}
-                        className="mt-6 text-lg text-emerald-600 font-medium"
-                    >
-                        🎊 Thank you, {name}! We can't wait to see you!
-                    </motion.p>
-                )}
+                    <AnimatePresence>
+                        {error && (
+                            <motion.div
+                                initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                                animate={{ opacity: 1, y: 0, scale: 1 }}
+                                exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                                transition={{ duration: 0.4 }}
+                                className="flex items-center justify-center gap-2 bg-gradient-to-r from-red-500/30 via-pink-500/20 to-red-500/30 text-red-200 px-5 py-3 rounded-xl mt-3 text-sm shadow-lg animate-fadeIn"
+                            >
+                                <XCircle size={20} className="text-red-300 animate-pulse" />
+                                <span>{error}</span>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </motion.form>
             </div>
         </section>
     );
