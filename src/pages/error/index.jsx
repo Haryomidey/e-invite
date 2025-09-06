@@ -1,23 +1,22 @@
 import { Link } from "react-router-dom";
-import { FaExclamationTriangle } from "react-icons/fa";
+import { FaRegMeh } from "react-icons/fa";
 
 const NotFound = () => {
     return (
-        <div className="flex flex-col items-center justify-center bg-background text-foreground px-6 py-10">
-            
-            <FaExclamationTriangle className="text-6xl text-primary mb-6" />
-            
-            <h1 className="text-5xl font-bold mb-4">404</h1>
-            
-            <p className="text-lg text-muted-foreground mb-6 text-center">
-                Oops! The page you are looking for does not exist.
+        <div className="flex flex-col items-center justify-center min-h-screen bg-black text-white px-6 py-10">
+            <FaRegMeh className="text-7xl text-pink-400 mb-6 animate-bounce" />
+            <h1 className="text-6xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-rose-400 to-pink-400">
+                404
+            </h1>
+            <p className="text-lg md:text-xl text-gray-300 mb-6 text-center max-w-md">
+                Well… this is awkward! Looks like the page took a day off 🌴.
+                Let's get you back to the party!
             </p>
-            
             <Link 
                 to="/" 
-                className="bg-primary text-primary-foreground px-6 py-3 rounded-lg font-semibold hover:bg-muted transition"
+                className="bg-gradient-to-r from-rose-500 to-pink-500 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl transition transform hover:scale-105"
             >
-                Go Back Home
+                Take Me Home 🏡
             </Link>
         </div>
     );
