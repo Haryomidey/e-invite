@@ -6,7 +6,7 @@ const ThankYou = () => {
         <section className="relative py-24 text-center text-white overflow-hidden">
             <div className="absolute inset-0">
                 <img
-                    src={images.couple14}
+                    src={images.couple18}
                     alt="wedding celebration"
                     className="w-full h-full object-cover"
                 />
